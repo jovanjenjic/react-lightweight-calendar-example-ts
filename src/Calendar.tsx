@@ -29,8 +29,6 @@ function Calendar() {
   const [selectedItem, setSelectedItem] =
     React.useState<CalendarItem>(itemInitialValues);
 
-  console.log(selectedItem, setOpen, setCalendarData, setCurrentDate);
-
   React.useEffect(() => {
     if (!open) {
       setSelectedItem(itemInitialValues);
