@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import Button from "@mui/material/Button";
@@ -15,16 +15,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
-
-interface CalendarItem {
-  id: string;
-  title: string | null;
-  startTimeDate: string | null;
-  endTimeDate: string | null;
-  createdAt: string | null;
-  updatedAt: string | null;
-  bgColor?: string | null;
-}
+import { CalendarItem, FormDialogProps } from "./Calendar.types";
 
 const initialValues: CalendarItem = {
   id: "0",
@@ -41,36 +32,7 @@ const validationSchema = yup.object().shape({
     .string()
     .max(20, "Title must be at most 20 characters")
     .required("Title is required"),
-  startTimeDate: yup
-    .date()
-    .test(
-      "start-time-check",
-      "Start time cannot be after end time",
-      function (value) {
-        const { endTimeDate } = this.parent as CalendarItem;
-        return !value || !endTimeDate;
-      },
-    ),
-  endTimeDate: yup
-    .date()
-    .test(
-      "end-time-check",
-      "End time cannot be before start time",
-      function (value) {
-        const { startTimeDate } = this.parent as CalendarItem;
-        return !value || !startTimeDate;
-      },
-    ),
 });
-
-interface FormDialogProps {
-  open: boolean;
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  isEdit: boolean;
-  selectedItem: CalendarItem;
-  onItemChange: (newItem: CalendarItem) => void;
-  onItemCreate: (newItem: CalendarItem) => void;
-}
 
 const FormDialog: React.FC<FormDialogProps> = ({
   open,
@@ -117,7 +79,9 @@ const FormDialog: React.FC<FormDialogProps> = ({
                 value={formik.values.title}
                 onChange={formik.handleChange}
                 error={formik.touched.title && Boolean(formik.errors.title)}
-                helperText={formik.touched.title && formik.errors.title}
+                helperText={
+                  formik.touched.title && (formik.errors.title as ReactNode)
+                }
                 variant="outlined"
               />
             </FormControl>
@@ -125,7 +89,7 @@ const FormDialog: React.FC<FormDialogProps> = ({
               <DialogContentText>Start time</DialogContentText>
               <DesktopDateTimePicker
                 className="time-date-picker-element"
-                value={new Date(formik.values.startTimeDate as string)}
+                value={new Date(formik.values.startTimeDate)}
                 onChange={(val) =>
                   formik.setFieldValue(
                     "startTimeDate",
@@ -138,7 +102,7 @@ const FormDialog: React.FC<FormDialogProps> = ({
               <DialogContentText>End time</DialogContentText>
               <DesktopDateTimePicker
                 className="time-date-picker-element"
-                value={new Date(formik.values.endTimeDate as string)}
+                value={new Date(formik.values.endTimeDate)}
                 onChange={(val) =>
                   formik.setFieldValue(
                     "endTimeDate",

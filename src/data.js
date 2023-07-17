@@ -101,7 +101,7 @@ export const data = [
     startTimeDate: "2023-06-01T06:30:00Z",
     endTimeDate: "2023-06-01T07:30:00Z",
     title: "Breakfast",
-    bgColor: "#bcdaff",
+    bgColor: "#ffe88f",
     createdAt: "2023-06-01T04:45:00Z",
     updatedAt: "2023-06-11T05:46:00Z",
   },

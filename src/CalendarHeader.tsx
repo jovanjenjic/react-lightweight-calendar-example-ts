@@ -3,21 +3,12 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-
-interface View {
-  value: string;
-  label: string;
-}
-
-interface Day {
-  value: number;
-  label: string;
-}
-
-interface TimeDateField {
-  value: string;
-  label: string;
-}
+import {
+  CalendarHeaderProps,
+  Day,
+  TimeDateField,
+  View,
+} from "./Calendar.types";
 
 const views: View[] = [
   { value: "WEEK_TIME", label: "Week time" },
@@ -45,21 +36,16 @@ const timeDateFields: TimeDateField[] = [
   { value: "endTimeDate", label: "End time date" },
 ];
 
-interface CustomizationComponentProps {
-  currentView: string;
-  setCurrentView: React.Dispatch<React.SetStateAction<string>>;
-  setWeekStartsOn: React.Dispatch<React.SetStateAction<number>>;
-  setActiveTimeDateField: React.Dispatch<React.SetStateAction<string>>;
-}
-
-const CustomizationComponent: React.FC<CustomizationComponentProps> = ({
+const CalendarHeader: React.FC<CalendarHeaderProps> = ({
   currentView,
+  weekStartsOn,
+  activeTimeDateField,
   setCurrentView,
   setWeekStartsOn,
   setActiveTimeDateField,
 }) => {
   return (
-    <div className="view-navigation">
+    <div className="calendar-header">
       <FormControl sx={{ m: 1, minWidth: 160 }} size="small">
         <InputLabel id="demo-select-small-label">Views</InputLabel>
         <Select
@@ -81,7 +67,7 @@ const CustomizationComponent: React.FC<CustomizationComponentProps> = ({
         <Select
           labelId="demo-select-small-label"
           id="demo-select-small"
-          value={1}
+          value={weekStartsOn}
           onChange={(e) => setWeekStartsOn(e.target.value as number)}
           label="Week starts on"
         >
@@ -99,7 +85,7 @@ const CustomizationComponent: React.FC<CustomizationComponentProps> = ({
         <Select
           labelId="demo-select-small-label"
           id="demo-select-small"
-          value="startTimeDate-endTimeDate"
+          value={activeTimeDateField}
           onChange={(e) => setActiveTimeDateField(e.target.value as string)}
           label="Active time date field"
         >
@@ -114,4 +100,4 @@ const CustomizationComponent: React.FC<CustomizationComponentProps> = ({
   );
 };
 
-export default CustomizationComponent;
+export default CalendarHeader;
