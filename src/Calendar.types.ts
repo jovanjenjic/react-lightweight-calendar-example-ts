@@ -8,6 +8,7 @@ export type CalendarItem =
       updatedAt: string | null;
       bgColor?: string | null;
     }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   | Record<string, any>;
 
 export interface FormDialogProps {

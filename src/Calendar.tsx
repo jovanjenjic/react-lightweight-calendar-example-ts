@@ -86,11 +86,11 @@ function Calendar() {
           setSelectedItem(item);
         }}
         onCellClick={onCellClick}
-        onDayNumberClick={(val) => {
+        onDayNumberClick={(val: string | Date) => {
           setCurrentDate(val);
           setCurrentView("DAY");
         }}
-        onDayStringClick={(val) => {
+        onDayStringClick={(val: string | Date) => {
           setCurrentDate(val);
           setCurrentView("DAY");
         }}
